@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ProduitController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'accueil']);
+Route::get('/', [MainController::class, 'accueil'])->name('accueil');
 
 Route::get('index', [FormationController::class, 'index']);
 Route::get('ajouter-produit', [FormationController::class, 'ajouterProduit']);
@@ -26,3 +27,5 @@ Route::get('update-produit', [FormationController::class, 'updateProduit']);
 Route::get('update-produit-2/{produit}', [FormationController::class, 'updateProduit2']);
 
 Route::get('suppression-produit', [FormationController::class, 'suppressionProduit']);
+
+Route::resource('produits', ProduitController::class);
