@@ -10,4 +10,14 @@ class Produit extends Model
     public $fillable = ['designation', 'prix', 'description', 'quantite'];
 
     use HasFactory;
+
+    public function category()
+    {
+        return $this->belongsTO(Category::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
