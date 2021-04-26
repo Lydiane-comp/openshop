@@ -28,8 +28,9 @@ class ProduitController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $produit = new Produit();
 
-        return view('front-office.produits.create', compact('categories'));
+        return view('front-office.produits.create', compact('categories', 'produit'));
     }
 
     /**
@@ -40,7 +41,7 @@ class ProduitController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'designation' => 'required|min:5|max:50|unique:produits',
+            'designation' => 'required|min:3|max:50|unique:produits',
             'prix' => 'required|numeric|between:1000,1000000',
             'quantite' => 'required|numeric|between:5,5000',
             'description' => 'nullable|max:255',
@@ -92,7 +93,7 @@ class ProduitController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'designation' => 'required|min:5|max:50|unique:produits,designation,'.$id,
+            'designation' => 'required|min:3|max:50|unique:produits,designation,'.$id,
             'prix' => 'required|numeric|between:1000,1000000',
             'quantite' => 'required|numeric|between:5,5000',
             'description' => 'nullable|max:255',
