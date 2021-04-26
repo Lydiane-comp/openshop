@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $produits = Produit::all();
+        $produits = Produit::orderByDesc('id')->paginate(15);
 
-        return view('front-office.produits.index', ['produits' => $produits]);
+        return view('front-office.produits.index', ['listProduits' => $produits]);
     }
 
     /**
@@ -26,6 +27,9 @@ class ProduitController extends Controller
      */
     public function create()
     {
+        $categories = Category::all();
+
+        return view('front-office.produits.create', compact('categories'));
     }
 
     /**
@@ -35,17 +39,33 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'designation' => 'required|min:5|max:50|unique:produits',
+            'prix' => 'required|numeric|between:1000,1000000',
+            'quantite' => 'required|numeric|between:5,5000',
+            'description' => 'nullable|max:255',
+            'category_id' => 'required|numeric',
+        ]);
+
+        $produit = Produit::create([
+            'designation' => $request->designation,
+            'prix' => $request->prix,
+            'category_id' => $request->category_id,
+            'quantite' => $request->quantite,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('produits.show', $produit)->with('statut', 'Votre nouveau produit a été bien ajouté !');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Produit $produit)
     {
+        return view('front-office.produits.show', compact('produit'));
     }
 
     /**

@@ -10,10 +10,13 @@ class FormationController extends Controller
 {
     public function index()
     {
+        abort(503);
+
         $produit1 = Produit::first();
         $user1 = User::first();
 
         $user1->produits()->attach($produit1);
+        $produit1->users()->attach($user1);
 
         dd($produit1->users);
 

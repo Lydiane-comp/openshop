@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
-    <title>Formation DSI</title>
+    <title>{{ config('app.name') }}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,7 +41,7 @@
             </form>
         </div>
     </nav>
-      <main class="main-app">
+      <main class="main-app mt-4 mb-5">
               {{ $slot }}
       </main>
       <footer>

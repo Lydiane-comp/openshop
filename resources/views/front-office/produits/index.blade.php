@@ -20,7 +20,7 @@
                     </thead>
                     <tbody>
                         
-                        @foreach ($produits as $produit)
+                        @foreach ($listProduits as $produit)
                             <tr>
                                 <td scope="row">{{ $produit->designation }}</td>
                                 <td>{{ $produit->prix }}</td>
@@ -38,6 +38,11 @@
 
                     </tbody>
                 </table>
+                <div class="row d-flex justify-content-center mt-5">
+                    <div class="">
+                        {{ $listProduits->links() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
