@@ -8,6 +8,16 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+            @if(session('statut'))
+                <div class="col-md-12">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                        <strong>{{ session('statut') }}</strong> 
+                    </div>
+                </div>
+            @endif
                 <table class="table">
                     <thead>
                         <tr>
@@ -31,7 +41,12 @@
 
                                     <a class="btn btn-info btn-sm mr-2" href="{{ route('produits.show', $produit) }}"><i class="fas fa-eye"></i> </a>
 
-                                    <a class="btn btn-danger btn-sm" href="{{ route('produits.destroy', $produit) }}"><i class="fas fa-trash"></i></a>
+                                    <a onclick="event.preventDefault(); document.getElementById('{{ $produit->id }}').submit()" class="btn btn-danger btn-sm" href="{{ route('produits.destroy', $produit) }}"><i class="fas fa-trash"></i></a>
+                                    
+                                    <form style="display: none" id="{{ $produit->id }}" method="post" action="{{ route('produits.destroy', $produit) }}">
+                                        @csrf
+                                        @method("DELETE")
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
