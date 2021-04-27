@@ -38,12 +38,18 @@
 
 <div class="form-group">
   <label for="">Description</label>
-  <textarea class="form-control" name="description" id="description" rows="3">
-    {{ old('descripton') ?? $produit->description }}
-  </textarea>
+  <textarea class="form-control" name="description" id="description" rows="3">{{ old('descripton') ?? $produit->description }}</textarea>
   @error("description")
   <small class="text-danger">{{ $message }}</small>
   @enderror
 </div>
 
-<button type="submit" class="btn btn-primary btn-block btn-lg">Valider</button>
+<div class="form-group">
+  <label for="">Image</label>
+  <input type="file" class="form-control-file" name="image" id="image" placeholder="" aria-describedby="fileHelpId">
+  @error("image")
+  <small class="text-danger">{{ $message }}</small>
+  @enderror
+</div>
+
+<button type="submit" class="btn btn-primary btn-block btn-lg mt-4">Valider</button>

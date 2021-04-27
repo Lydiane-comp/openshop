@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProduitFormRequest;
 use App\Models\Category;
 use App\Models\Produit;
-use Illuminate\Http\Request;
 
 class ProduitController extends Controller
 {
@@ -38,15 +38,14 @@ class ProduitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProduitFormRequest $request)
     {
-        $request->validate([
-            'designation' => 'required|min:3|max:50|unique:produits',
-            'prix' => 'required|numeric|between:1000,1000000',
-            'quantite' => 'required|numeric|between:5,5000',
-            'description' => 'nullable|max:255',
-            'category_id' => 'required|numeric',
-        ]);
+        // dd(date('d/m/y H:m:i', time()));
+        $imageName = 'produit.png';
+        if ($request->file('image')) {
+            $imageName = time().'_'.$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public/produits', $imageName);
+        }
 
         $produit = Produit::create([
             'designation' => $request->designation,
@@ -54,6 +53,7 @@ class ProduitController extends Controller
             'category_id' => $request->category_id,
             'quantite' => $request->quantite,
             'description' => $request->description,
+            'image' => $imageName,
         ]);
 
         return redirect()->route('produits.show', $produit)->with('statut', 'Votre nouveau produit a été bien ajouté !');
@@ -90,16 +90,8 @@ class ProduitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProduitFormRequest $request, $id)
     {
-        $request->validate([
-            'designation' => 'required|min:3|max:50|unique:produits,designation,'.$id,
-            'prix' => 'required|numeric|between:1000,1000000',
-            'quantite' => 'required|numeric|between:5,5000',
-            'description' => 'nullable|max:255',
-            'category_id' => 'required|numeric',
-        ]);
-
         Produit::where('id', $id)->update([
             'designation' => $request->designation,
             'prix' => $request->prix,

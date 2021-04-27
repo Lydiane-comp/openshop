@@ -23,7 +23,9 @@
         @foreach ($produits as $produit)
           <div class="col-md-4">
             <div class="card text-center mb-4">
-              <img class="card-img-top" src="https://picsum.photos/200/150" alt="">
+
+              <img class="card-img-top" src="{{ ($produit->image=="produit.png" OR $produit->image==null) ? 'https://picsum.photos/200/150' : asset('storage/produits/'.$produit->image) }} " alt="">
+              
               <div class="card-body">
                 <h4 class="card-title">{{ $produit->designation }}</h4>
                 <p class="card-text">{{ $produit->description }}</p>

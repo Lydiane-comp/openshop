@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form method="post" action="{{ route('produits.store') }}">
+                <form method="post" action="{{ route('produits.store') }}" enctype="multipart/form-data" >
                   @method("POST")
                   @include("partials._produit-form")
                 </form>

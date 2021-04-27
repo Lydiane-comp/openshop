@@ -41,7 +41,7 @@
             </form>
         </div>
     </nav>
-      <main class="main-app mt-4 mb-5">
+      <main class="main-app mb-5">
               {{ $slot }}
       </main>
       <footer>
