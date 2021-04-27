@@ -18,6 +18,9 @@
                     </div>
                 </div>
             @endif
+                <div class="ml-2" >
+                    <a class="btn btn-primary btn sm" href="{{ route('produits.create') }}"><i class="fas fa-plus"></i> Ajouter</a>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>

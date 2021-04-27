@@ -29,9 +29,3 @@ Route::get('update-produit-2/{produit}', [FormationController::class, 'updatePro
 Route::get('suppression-produit', [FormationController::class, 'suppressionProduit']);
 
 Route::resource('produits', ProduitController::class);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';

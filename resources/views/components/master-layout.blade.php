@@ -27,18 +27,44 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Catégories</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route("register") }}">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
+                    </li>
+                @else
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
+                        <a onClick="event.preventDefault(); document.getElementById('deconnexion').submit();" class="dropdown-item" href="{{ route('logout') }}">Déconnexion</a>
+                        <form id="deconnexion" method="post" action="{{ route('logout') }}">
+                            @csrf
+
+                        </form>
+
+                        
+                    </div>
+                </li>
+
                 {{-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="#">Action 1</a>
-                        <a class="dropdown-item" href="#">Action 2</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="triggerId">
+                        <a class="dropdown-item" href="#">Action</a>
                     </div>
                 </li> --}}
+                @endguest
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            {{-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </form> --}}
         </div>
     </nav>
       <main class="main-app mb-5">
