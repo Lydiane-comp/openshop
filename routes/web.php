@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'accueil'])->name('accueil');
+Route::get('/', [MainController::class, 'accueil'])->middleware(['auth', 'isAdmin'])->name('accueil');
 
 Route::get('index', [FormationController::class, 'index']);
 Route::get('ajouter-produit', [FormationController::class, 'ajouterProduit']);
