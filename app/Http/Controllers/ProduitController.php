@@ -3,16 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProduitFormRequest;
+use App\Mail\AjoutProduit;
 use App\Models\Category;
 use App\Models\Produit;
+use App\Models\User;
+use App\Notifications\NouveauProduit;
+use Illuminate\Support\Facades\Mail;
 
 class ProduitController extends Controller
 {
     /**
      * Display a listing of the resource.
+
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // code...
+        $this->middleware(['auth', 'isAdmin'])->except(['index', 'show']);
+    }
+
     public function index()
     {
         $produits = Produit::orderByDesc('id')->paginate(15);
@@ -55,6 +66,8 @@ class ProduitController extends Controller
             'description' => $request->description,
             'image' => $imageName,
         ]);
+        $user = User::first();
+        Mail::to($user)->send(new AjoutProduit($produit));
 
         return redirect()->route('produits.show', $produit)->with('statut', 'Votre nouveau produit a été bien ajouté !');
     }
@@ -99,6 +112,9 @@ class ProduitController extends Controller
             'description' => $request->description,
             'category_id' => $request->category_id,
         ]);
+        $user = User::first();
+        $produit = Produit::first();
+        $user->notify(new NouveauProduit($produit));
 
         return redirect()->route('produits.show', $id)->with('statut', 'Votre produit a bien été modifié');
     }

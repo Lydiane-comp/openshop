@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return $this->role->profil == 'super-admin' or $this->role->profil == 'admin';
     }
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->phone_number;
+    }
 }

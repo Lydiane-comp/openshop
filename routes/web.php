@@ -3,6 +3,8 @@
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProduitController;
+use App\Mail\AjoutProduit;
+use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,5 +35,7 @@ Route::resource('produits', ProduitController::class);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-
+Route::get('test-mail', function () {
+    return new AjoutProduit(Produit::OrderByDesc('id')->first());
+});
 require __DIR__.'/auth.php';

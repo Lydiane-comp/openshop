@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center mt-2">Tous nos Produits</h1>
+                <h5 class="text-center">Notre catalogue comporte {{ nb_produit(1) }}</h5>
                 <hr>
             </div>
         </div>
@@ -40,16 +41,17 @@
                                 <td>{{ $produit->quantite }}</td>
                                 <td>{{ $produit->description }}</td>
                                 <td class="d-flex">
-                                    <a class="btn btn-primary btn-sm mr-2" href="{{ route('produits.edit', $produit) }}"><i class="fas fa-edit"></i></a>
-
                                     <a class="btn btn-info btn-sm mr-2" href="{{ route('produits.show', $produit) }}"><i class="fas fa-eye"></i> </a>
-
-                                    <a onclick="event.preventDefault(); if(confirm('Etes-vous sûr de vouloir supprimer ce produit ?')) document.getElementById('{{ $produit->id }}').submit()" class="btn btn-danger btn-sm" href="{{ route('produits.destroy', $produit) }}"><i class="fas fa-trash"></i></a>
+                                    @if (Auth::user()!=null && Auth::user()->isAdmin())
+                                        <a class="btn btn-primary btn-sm mr-2" href="{{ route('produits.edit', $produit) }}"><i class="fas fa-edit"></i></a>
+                                        <a onclick="event.preventDefault(); if(confirm('Etes-vous sûr de vouloir supprimer ce produit ?')) document.getElementById('{{ $produit->id }}').submit()" class="btn btn-danger btn-sm" href="{{ route('produits.destroy', $produit) }}"><i class="fas fa-trash"></i></a>
+                                        
+                                        <form style="display: none" id="{{ $produit->id }}" method="post" action="{{ route('produits.destroy', $produit) }}">
+                                            @csrf
+                                            @method("DELETE")
+                                        </form>  
+                                    @endif
                                     
-                                    <form style="display: none" id="{{ $produit->id }}" method="post" action="{{ route('produits.destroy', $produit) }}">
-                                        @csrf
-                                        @method("DELETE")
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
